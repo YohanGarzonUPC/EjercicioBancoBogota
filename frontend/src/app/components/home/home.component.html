@@ -1,0 +1,108 @@
+<div class="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 py-6 flex flex-col justify-center sm:py-12">
+  <!-- Botón de inicio de sesión-->
+  <div class="absolute top-4 right-4">
+    <button routerLink="/login" class="group px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-all duration-300 transform hover:scale-105 shadow-lg flex items-center space-x-2">
+      <span>Iniciar Sesión</span>
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+      </svg>
+    </button>
+  </div>
+<!-- Formulario-->
+  <div class="relative py-3 sm:max-w-xl sm:mx-auto">
+    <div class="absolute inset-0 bg-gradient-to-r from-blue-600 to-indigo-600 shadow-lg transform -skew-y-6 sm:skew-y-0 sm:-rotate-6 sm:rounded-3xl"></div>
+    <div class="relative px-4 py-10 bg-white shadow-lg sm:rounded-3xl sm:p-20">
+      <div class="max-w-md mx-auto">
+        <div class="divide-y divide-gray-200">
+          <div class="py-8 text-base leading-6 space-y-4 text-gray-700 sm:text-lg sm:leading-7">
+            <div class="text-center mb-8">
+              <h2 class="text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600">Registro de Practicantes</h2>
+              <p class="mt-2 text-sm text-gray-600">¡Únete a nuestro programa de prácticas!</p>
+            </div>
+            
+            <form (ngSubmit)="onSubmit()" class="space-y-6">
+              <div class="transform transition-all duration-300 hover:scale-[1.01]">
+                <label class="block text-sm font-medium text-gray-700">Nombre Completo</label>
+                <input type="text" [(ngModel)]="formData.fullName" name="fullName" required
+                  class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 px-4 py-3 hover:border-blue-400 transition-colors">
+              </div>
+
+              <div class="transform transition-all duration-300 hover:scale-[1.01]">
+                <label class="block text-sm font-medium text-gray-700">Correo Electrónico</label>
+                <input type="email" [(ngModel)]="formData.email" name="email" required
+                  class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 px-4 py-3 hover:border-blue-400 transition-colors">
+              </div>
+
+              <div class="transform transition-all duration-300 hover:scale-[1.01]">
+                <label class="block text-sm font-medium text-gray-700">Carrera Universitaria</label>
+                <input type="text" [(ngModel)]="formData.career" name="career" required
+                  class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 px-4 py-3 hover:border-blue-400 transition-colors">
+              </div>
+
+              <div class="transform transition-all duration-300 hover:scale-[1.01]">
+                <label class="block text-sm font-medium text-gray-700">Semestre Actual</label>
+                <select [(ngModel)]="formData.semester" name="semester" required
+                  class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 px-4 py-3 hover:border-blue-400 transition-colors">
+                  <option value="" disabled selected>Selecciona tu semestre</option>
+                  <option *ngFor="let sem of semestres" [value]="sem">{{ sem }}° Semestre</option>
+                </select>
+              </div>
+
+              <div class="transform transition-all duration-300 hover:scale-[1.01]">
+                <label class="block text-sm font-medium text-gray-700">Hoja de Vida (PDF)</label>
+                <div class="mt-1 flex items-center">
+                  <input type="file" accept=".pdf" (change)="onFileSelected($event)"
+                    class="hidden" #fileInput>
+                  <button type="button" (click)="fileInput.click()"
+                    class="inline-flex items-center px-4 py-3 border border-gray-300 rounded-lg shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 hover:border-blue-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-all duration-300">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13" />
+                    </svg>
+                    Adjuntar archivo
+                  </button>
+                  <span class="ml-3 text-sm text-gray-600">
+                    {{ selectedFileName || 'Ningún archivo seleccionado' }}
+                  </span>
+                </div>
+              </div>
+
+              <div class="pt-6">
+                <button type="submit"
+                  class="w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-lg text-sm font-medium text-white bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transform transition-all duration-300 hover:scale-[1.02]">
+                  <span>Enviar Registro</span>
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                  </svg>
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal de éxito-->
+<div *ngIf="showModal" class="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full flex items-center justify-center backdrop-blur-sm transition-all duration-300">
+  <div class="relative p-8 bg-white w-96 rounded-2xl shadow-2xl transform transition-all duration-300 scale-100">
+    <div class="text-center">
+      <div class="mx-auto flex items-center justify-center h-16 w-16 rounded-full bg-green-100 mb-6">
+        <svg class="h-8 w-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+        </svg>
+      </div>
+      <h3 class="text-2xl leading-6 font-bold text-gray-900 mb-3">¡Registro Exitoso!</h3>
+      <p class="text-sm text-gray-500 mb-6">
+        Tus datos han sido enviados correctamente. Pronto nos pondremos en contacto contigo.
+      </p>
+      <button (click)="closeModal()"
+        class="w-full inline-flex justify-center items-center rounded-lg border border-transparent shadow-lg px-6 py-3 bg-gradient-to-r from-blue-600 to-indigo-600 text-base font-medium text-white hover:from-blue-700 hover:to-indigo-700 focus:outline-none transform transition-all duration-300 hover:scale-[1.02]">
+        <span>Entendido</span>
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+        </svg>
+      </button>
+    </div>
+  </div>
+</div>

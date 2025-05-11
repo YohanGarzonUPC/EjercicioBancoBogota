@@ -1,0 +1,140 @@
+<div class="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
+  <!-- Header -->
+  <nav class="bg-white shadow-lg">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+      <div class="flex items-center justify-between">
+        <h1 class="text-2xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600">
+          Panel de Gestión
+        </h1>
+        <button (click)="logout()"
+          class="group px-6 py-2 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-lg hover:from-blue-700 hover:to-indigo-700 transition-all duration-300 transform hover:scale-105 shadow-lg flex items-center space-x-2">
+          <span>Cerrar Sesión</span>
+          <svg class="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor"
+            viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+          </svg>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Content-->
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <!-- Mensaje de error-->
+    <div *ngIf="error"
+      class="mb-6 bg-red-50 border-l-4 border-red-400 p-4 rounded-lg shadow-md transform transition-all duration-300 hover:scale-[1.01]">
+      <div class="flex">
+        <div class="flex-shrink-0">
+          <svg class="h-5 w-5 text-red-400" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd"
+              d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
+              clip-rule="evenodd" />
+          </svg>
+        </div>
+        <div class="ml-3">
+          <p class="text-sm text-red-700">{{ error }}</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Estado vacío-->
+    <div *ngIf="practicantes.length === 0"
+      class="text-center py-12 bg-white rounded-lg shadow-lg transform transition-all duration-300 hover:scale-[1.01]">
+      <svg class="mx-auto h-12 w-12 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+          d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4" />
+      </svg>
+      <h3 class="mt-2 text-lg font-medium text-gray-900">No hay practicantes registrados</h3>
+      <p class="mt-1 text-sm text-gray-500">Los practicantes registrados aparecerán aquí.</p>
+    </div>
+
+    <!-- Lista de practicantes -->
+    <div class="grid grid-cols-1 gap-6">
+      <div *ngFor="let practicante of practicantes"
+        class="bg-white rounded-lg shadow-lg border-2 overflow-hidden transition-all duration-300 hover:shadow-xl transform hover:scale-[1.01]"
+        [ngClass]="{
+           'border-green-500 ring-2 ring-green-500 bg-green-50': practicante.pasa === true,
+           'border-red-500 ring-2 ring-red-500 bg-red-50': practicante.pasa === false,
+           'border-gray-200': practicante.pasa === null
+         }">
+        <div class="p-6">
+          <div class="flex items-start justify-between">
+            <div class="flex-1 grid grid-cols-2 md:grid-cols-3 gap-6">
+              <!-- Información del practicante -->
+              <div class="space-y-1">
+                <p class="text-sm font-medium text-gray-500">Nombre</p>
+                <p class="text-lg font-semibold text-gray-900 flex items-center">
+                  {{ practicante.nombre }}
+                  <svg *ngIf="practicante.pasa === true" class="w-5 h-5 text-green-500 ml-2" fill="currentColor"
+                    viewBox="0 0 20 20">
+                    <path fill-rule="evenodd"
+                      d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                      clip-rule="evenodd" />
+                  </svg>
+                  <svg *ngIf="practicante.pasa === false" class="w-5 h-5 text-red-500 ml-2" fill="currentColor"
+                    viewBox="0 0 20 20">
+                    <path fill-rule="evenodd"
+                      d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
+                      clip-rule="evenodd" />
+                  </svg>
+                </p>
+              </div>
+
+              <div class="space-y-1">
+                <p class="text-sm font-medium text-gray-500">Email</p>
+                <p class="text-gray-900">{{ practicante.email }}</p>
+              </div>
+
+              <div class="space-y-1">
+                <p class="text-sm font-medium text-gray-500">Carrera</p>
+                <p class="text-gray-900">{{ practicante.carrera }}</p>
+              </div>
+
+              <div class="space-y-1">
+                <p class="text-sm font-medium text-gray-500">Semestre</p>
+                <p class="text-gray-900">{{ practicante.semestre }}° Semestre</p>
+              </div>
+
+              <div class="col-span-2 md:col-span-3 space-y-1">
+                <p class="text-sm font-medium text-gray-500">CV</p>
+                <a href="javascript:void(0)" 
+                   (click)="practicante.pasa !== false && descargarCV(practicante.cv_path)"
+                   class="inline-flex items-center transition-colors duration-300"
+                   [ngClass]="practicante.pasa === false ? 'text-gray-400 cursor-not-allowed' : 'text-blue-600 hover:text-blue-800'">
+                  <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                  </svg>
+                  {{ practicante.cv_path }}
+                </a>
+              </div>
+            </div>
+
+            <!-- Botones de acción -->
+            <div class="ml-6 flex items-center gap-3">
+              <button *ngIf="practicante.pasa === true"
+                class="px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm font-medium transform transition-all duration-300 hover:scale-105">
+                Viable ✓
+              </button>
+              <button *ngIf="practicante.pasa === false"
+                class="px-3 py-1 bg-red-100 text-red-800 rounded-full text-sm font-medium transform transition-all duration-300 hover:scale-105">
+                No viable ✗
+              </button>
+              <button (click)="marcarViable(practicante.id, true)" [disabled]="practicante.pasa !== null"
+                class="px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 transform hover:scale-105 shadow-md"
+                [ngClass]="practicante.pasa === null ? 'bg-gradient-to-r from-green-500 to-green-600 text-white hover:from-green-600 hover:to-green-700' : 'bg-gray-100 text-gray-400 cursor-not-allowed'">
+                Viable
+              </button>
+              <button (click)="marcarViable(practicante.id, false)" [disabled]="practicante.pasa !== null"
+                class="px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 transform hover:scale-105 shadow-md"
+                [ngClass]="practicante.pasa === null ? 'bg-gradient-to-r from-red-500 to-red-600 text-white hover:from-red-600 hover:to-red-700' : 'bg-gray-100 text-gray-400 cursor-not-allowed'">
+                No viable
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
